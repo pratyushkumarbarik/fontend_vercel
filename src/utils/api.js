@@ -34,7 +34,7 @@ export const itemsAPI = {
 // Generate full URL for uploaded images
 export const assetUrl = (maybePath) => {
   // Return your own backend-hosted default image if no path provided
-  if (!maybePath) return `${API_BASE_URL}/uploads/default.png`;
+  if (!maybePath) return `${API_BASE_URL}/uploads/default.svg`;
 
   // If already fully qualified URL, return as is
   if (maybePath.startsWith('http://') || maybePath.startsWith('https://'))
