@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://lost-and-found-api-cb8s.onrender.com';
+const API_BASE_URL = 'vercel-frontend-lostfound-pz52.vercel.app';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
