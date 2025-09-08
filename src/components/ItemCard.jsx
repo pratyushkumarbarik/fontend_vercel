@@ -12,10 +12,8 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
       day: 'numeric',
     });
 
-  // ✅ Full URL for image or placeholder
-  const imageSrc = item.image
-    ? assetUrl(item.image)
-    : 'https://via.placeholder.com/400x300?text=No+Image';
+  // ✅ Full URL or placeholder
+  const imageSrc = assetUrl(item.image);
 
   const handleImageClick = () => setShowImageModal(true);
   const closeModal = () => setShowImageModal(false);
@@ -122,10 +120,8 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
         </div>
       )}
 
-      {/* Modal backdrop click to close */}
-      {showImageModal && (
-        <div className="fixed inset-0 z-40" onClick={closeModal} aria-hidden="true" />
-      )}
+      {/* Modal backdrop click */}
+      {showImageModal && <div className="fixed inset-0 z-40" onClick={closeModal} />}
     </>
   );
 };
