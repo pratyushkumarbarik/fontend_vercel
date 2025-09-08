@@ -5,14 +5,14 @@ import { assetUrl } from '../utils/api';
 const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
   const [showImageModal, setShowImageModal] = useState(false);
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
     });
-  };
 
+  // ✅ Full URL for image or placeholder
   const imageSrc = item.image
     ? assetUrl(item.image)
     : 'https://via.placeholder.com/400x300?text=No+Image';
@@ -27,12 +27,12 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
           <img
             src={imageSrc}
             alt={item.itemName}
+            className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity duration-200"
+            onClick={handleImageClick}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
             }}
-            className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity duration-200"
-            onClick={handleImageClick}
           />
           <div
             className="absolute inset-0 hover:bg-black hover:bg-opacity-10 transition-all duration-200 cursor-pointer"
@@ -107,11 +107,11 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
               <img
                 src={imageSrc}
                 alt={item.itemName}
+                className="w-full h-auto max-h-[80vh] object-contain rounded-md"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
                 }}
-                className="w-full h-auto max-h-[80vh] object-contain rounded-md"
               />
               <div className="mt-4 text-center">
                 <h4 className="text-lg font-semibold text-gray-900 mb-1">{item.itemName}</h4>
@@ -124,11 +124,7 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
 
       {/* Modal backdrop click to close */}
       {showImageModal && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={closeModal}
-          aria-hidden="true"
-        />
+        <div className="fixed inset-0 z-40" onClick={closeModal} aria-hidden="true" />
       )}
     </>
   );
