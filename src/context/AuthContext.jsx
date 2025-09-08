@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { itemsAPI } from '../utils/api'; // ✅ use your axios API wrapper
 
 const AuthContext = createContext(undefined);
 
@@ -22,28 +23,24 @@ export const AuthProvider = ({ children }) => {
     setIsLoading(false);
   }, []);
 
+  // ✅ use itemsAPI.login instead of localhost fetch
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:5000/admin/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await itemsAPI.login(email, password);
 
-      if (response.ok) {
-        const { token } = await response.json();
+      if (res && res.data?.token) {
         const adminUser = {
           id: '1',
-          email: email,
+          email,
           role: 'admin',
-          token: token,
+          token: res.data.token,
         };
+
         setUser(adminUser);
         localStorage.setItem('user', JSON.stringify(adminUser));
         return true;
       }
+
       return false;
     } catch (error) {
       console.error('Login error:', error);
