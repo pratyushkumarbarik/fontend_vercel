@@ -1,6 +1,7 @@
 import React from 'react';
 import { Clock, User, BookOpen, Hash } from 'lucide-react';
 import { assetUrl } from '../utils/api';
+import RetryImage from './RetryImage';
 
 const ReportedItemCard = ({ item, onApprove, onReject }) => {
   const formatDate = (dateString) =>
@@ -18,14 +19,12 @@ const ReportedItemCard = ({ item, onApprove, onReject }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="aspect-w-16 aspect-h-9">
-        <img
+        <RetryImage
           src={imageSrc}
           alt={item.itemName}
           className="w-full h-48 object-cover"
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = assetUrl('');
-          }}
+          fallback={assetUrl('')}
+          maxRetries={3}
         />
       </div>
 
