@@ -3,17 +3,19 @@ import { Clock, User, BookOpen, Hash } from 'lucide-react';
 import { assetUrl } from '../utils/api';
 
 const ReportedItemCard = ({ item, onApprove, onReject }) => {
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
-  };
 
-  const imageSrc = item.image ? assetUrl(item.image) : 'https://via.placeholder.com/400x300?text=No+Image';
+  // Get full image URL or fallback to backend default image
+  const imageSrc = item.image
+    ? assetUrl(item.image)
+    : 'https://backend-render-l8re.onrender.com/uploads/default.png';
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -22,9 +24,13 @@ const ReportedItemCard = ({ item, onApprove, onReject }) => {
           src={imageSrc}
           alt={item.itemName}
           className="w-full h-48 object-cover"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://backend-render-l8re.onrender.com/uploads/default.png';
+          }}
         />
       </div>
-      
+
       <div className="p-6">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-lg font-semibold text-gray-900">{item.itemName}</h3>
@@ -40,9 +46,9 @@ const ReportedItemCard = ({ item, onApprove, onReject }) => {
             {item.status}
           </span>
         </div>
-        
+
         <p className="text-gray-600 text-sm mb-4">{item.description}</p>
-        
+
         <div className="space-y-2 mb-4">
           <div className="flex items-center text-sm text-gray-500">
             <User className="h-4 w-4 mr-2" />
