@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// ✅ Your deployed backend URL
+// Your deployed backend URL
 const API_BASE_URL = 'https://backend-render-l8re.onrender.com';
 
 // Axios instance
@@ -31,18 +31,22 @@ export const itemsAPI = {
   approveReportedItem: (id) => api.post(`/admin/approve-reported-item/${id}`),
 };
 
-// ✅ Generate full URL for uploaded images
+// Generate full URL for uploaded images
 export const assetUrl = (maybePath) => {
-  // 1️⃣ If no path, return placeholder
-  if (!maybePath) return 'https://via.placeholder.com/400x300?text=No+Image';
+  // Return your own backend-hosted default image if no path provided
+  if (!maybePath) return `${API_BASE_URL}/uploads/default.png`;
 
-  // 2️⃣ If already a full URL, return as is
+  // If already fully qualified URL, return as is
   if (maybePath.startsWith('http://') || maybePath.startsWith('https://'))
     return maybePath;
 
-  // 3️⃣ Otherwise, prepend backend URL
+  // Normalize slashes
   let normalized = String(maybePath).replace(/\\/g, '/');
-  if (!normalized.startsWith('/')) normalized = '/' + normalized;
+
+  // Ensure path starts with /uploads/
+  if (!normalized.startsWith('/uploads/')) {
+    normalized = '/uploads/' + normalized.replace(/^\/+/, '');
+  }
 
   return `${API_BASE_URL}${normalized}`;
 };
