@@ -17,13 +17,8 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
     ? assetUrl(item.image)
     : 'https://via.placeholder.com/400x300?text=No+Image';
 
-  const handleImageClick = () => {
-    setShowImageModal(true);
-  };
-
-  const closeModal = () => {
-    setShowImageModal(false);
-  };
+  const handleImageClick = () => setShowImageModal(true);
+  const closeModal = () => setShowImageModal(false);
 
   return (
     <>
@@ -32,10 +27,17 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
           <img
             src={imageSrc}
             alt={item.itemName}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+            }}
             className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity duration-200"
             onClick={handleImageClick}
           />
-          <div className="absolute inset-0 hover:bg-black hover:bg-opacity-10 transition-all duration-200 cursor-pointer" onClick={handleImageClick}></div>
+          <div
+            className="absolute inset-0 hover:bg-black hover:bg-opacity-10 transition-all duration-200 cursor-pointer"
+            onClick={handleImageClick}
+          />
         </div>
 
         <div className="p-6">
@@ -100,17 +102,19 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
             >
               <X className="h-5 w-5 text-gray-700" />
             </button>
-            
+
             <div className="p-4">
               <img
                 src={imageSrc}
                 alt={item.itemName}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'https://via.placeholder.com/400x300?text=No+Image';
+                }}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-md"
               />
               <div className="mt-4 text-center">
-                <h4 className="text-lg font-semibold text-gray-900 mb-1">
-                  {item.itemName}
-                </h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-1">{item.itemName}</h4>
                 <p className="text-sm text-gray-600">{item.description}</p>
               </div>
             </div>
