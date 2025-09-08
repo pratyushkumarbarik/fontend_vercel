@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Clock, User, X } from 'lucide-react';
 import { assetUrl } from '../utils/api';
+import RetryImage from './RetryImage';
 
 const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
   const [showImageModal, setShowImageModal] = useState(false);
@@ -22,15 +23,13 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
     <>
       <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
         <div className="relative h-48 bg-gray-100">
-          <img
+          <RetryImage
             src={imageSrc}
             alt={item.itemName}
             className="w-full h-full object-contain cursor-pointer hover:opacity-90 transition-opacity duration-200"
             onClick={handleImageClick}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = assetUrl('');
-            }}
+            fallback={assetUrl('')}
+            maxRetries={3}
           />
           <div
             className="absolute inset-0 hover:bg-black hover:bg-opacity-10 transition-all duration-200 cursor-pointer"
@@ -102,14 +101,12 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
             </button>
 
             <div className="p-4">
-              <img
+              <RetryImage
                 src={imageSrc}
                 alt={item.itemName}
                 className="w-full h-auto max-h-[80vh] object-contain rounded-md"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = assetUrl('');
-                }}
+                fallback={assetUrl('')}
+                maxRetries={3}
               />
               <div className="mt-4 text-center">
                 <h4 className="text-lg font-semibold text-gray-900 mb-1">{item.itemName}</h4>
