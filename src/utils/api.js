@@ -6,7 +6,6 @@ const API_BASE_URL = 'https://backend-render-l8re.onrender.com';
 // Axios instance
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: { 'Content-Type': 'application/json' },
 });
 
 // Attach token if present
@@ -15,6 +14,18 @@ api.interceptors.request.use((config) => {
   if (user) {
     const { token } = JSON.parse(user);
     if (token) config.headers.Authorization = `Bearer ${token}`;
+  }
+  // Ensure correct Content-Type: for FormData let the browser set it
+  if (config.data instanceof FormData) {
+    if (config.headers) {
+      delete config.headers['Content-Type'];
+    }
+  } else {
+    if (config.headers) {
+      config.headers['Content-Type'] = 'application/json';
+    } else {
+      config.headers = { 'Content-Type': 'application/json' };
+    }
   }
   return config;
 });
