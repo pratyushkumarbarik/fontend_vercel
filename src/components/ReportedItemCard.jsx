@@ -13,9 +13,7 @@ const ReportedItemCard = ({ item, onApprove, onReject }) => {
     });
 
   // Get full image URL or fallback to backend default image
-  const imageSrc = item.image
-    ? assetUrl(item.image)
-    : 'https://backend-render-l8re.onrender.com/uploads/default.png';
+  const imageSrc = item.image ? assetUrl(item.image) : assetUrl('');
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -26,7 +24,7 @@ const ReportedItemCard = ({ item, onApprove, onReject }) => {
           className="w-full h-48 object-cover"
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = 'https://backend-render-l8re.onrender.com/uploads/default.png';
+            e.target.src = assetUrl('');
           }}
         />
       </div>
