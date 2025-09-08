@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use your actual backend API domain with https://
-const API_BASE_URL = 'https://vercel-frontend-lostfound-pz52-pdrol74d0.vercel.app';
+const API_BASE_URL = 'https://vercel-backend-lostfound.vercel.app'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
