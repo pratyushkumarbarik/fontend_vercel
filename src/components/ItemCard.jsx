@@ -13,7 +13,7 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
     });
 
   // Get full image URL or fallback
-  const imageSrc = item.image ? assetUrl(item.image) : 'https://backend-render-l8re.onrender.com/uploads/default.png';
+  const imageSrc = item.image ? assetUrl(item.image) : assetUrl('');
 
   const handleImageClick = () => setShowImageModal(true);
   const closeModal = () => setShowImageModal(false);
@@ -29,7 +29,7 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
             onClick={handleImageClick}
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = 'https://backend-render-l8re.onrender.com/uploads/default.png';
+              e.target.src = assetUrl('');
             }}
           />
           <div
@@ -108,7 +108,7 @@ const ItemCard = ({ item, showClaimButton = false, onClaim }) => {
                 className="w-full h-auto max-h-[80vh] object-contain rounded-md"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'https://backend-render-l8re.onrender.com/uploads/default.png';
+                  e.target.src = assetUrl('');
                 }}
               />
               <div className="mt-4 text-center">
