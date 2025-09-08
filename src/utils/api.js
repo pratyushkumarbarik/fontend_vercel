@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-// Use your actual backend API domain with https://
-const API_BASE_URL = 'https://backend-render-l8re.onrender.com'; // Or your Render backend URL
+// ✅ Use your deployed backend API
+const API_BASE_URL = 'https://backend-render-l8re.onrender.com';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
+// ✅ Attach Bearer token if present
 api.interceptors.request.use((config) => {
   const user = localStorage.getItem('user');
   if (user) {
@@ -18,17 +22,23 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// ✅ API Endpoints
 export const itemsAPI = {
+  // Public
   getAllItems: () => api.get('/items'),
+  reportItem: (itemData) => api.post('/report-item', itemData),
+
+  // Admin (protected)
+  login: (email, password) =>
+    api.post('/admin/login', { email, password }), // ✅ added login
   getAdminItems: () => api.get('/admin/items'),
   addItem: (itemData) => api.post('/admin/add-item', itemData),
   claimItem: (id, claimData) => api.put(`/admin/items/${id}/claim`, claimData),
-  reportItem: (itemData) => api.post('/report-item', itemData),
   getReportedItems: () => api.get('/admin/reported-items'),
   approveReportedItem: (id) => api.post(`/admin/approve-reported-item/${id}`),
 };
 
-// assetUrl correctly handles absolute and relative image URLs
+// ✅ Handle static assets (images)
 export const assetUrl = (maybePath) => {
   if (!maybePath) return '';
   if (maybePath.startsWith('http://') || maybePath.startsWith('https://')) return maybePath;
